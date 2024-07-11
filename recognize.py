@@ -39,6 +39,7 @@ recognizer = train_recognizer("known_faces")
 # Function to recognize faces in a live video stream
 def recognize_faces(video_source=0):
     cap = cv2.VideoCapture(video_source)
+    name = ""
 
     while True:
         ret, frame = cap.read()
@@ -52,8 +53,12 @@ def recognize_faces(video_source=0):
 
             label_id, confidence = recognizer.predict(roi_gray)
 
+            if label_id == 0:
+                name = "Andree"
+            elif label_id == 1:
+                name = "Ethan"
             if confidence < 100:
-                label_text = f"Person {label_id}"
+                label_text = f"Person {name}"
             else:
                 label_text = "Unknown"
 

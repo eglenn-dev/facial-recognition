@@ -2,16 +2,13 @@ import cv2
 import os
 import numpy as np
 
-# Load the Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-# Function to extract faces from an image
 def extract_faces(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
     return [image[y:y+h, x:x+w] for (x, y, w, h) in faces]
 
-# Function to train the recognizer on known faces
 def train_recognizer(data_folder_path):
     faces = []
     labels = []
@@ -28,15 +25,12 @@ def train_recognizer(data_folder_path):
                         faces.append(cv2.cvtColor(extracted_faces[0], cv2.COLOR_BGR2GRAY))
                         labels.append(i) 
 
-    # Use LBPHFaceRecognizer (or another algorithm)
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.train(faces, np.array(labels))
     return recognizer
 
-# Train the recognizer
 recognizer = train_recognizer("known_faces")
 
-# Function to recognize faces in a live video stream
 def recognize_faces(video_source=0):
     cap = cv2.VideoCapture(video_source)
     name = ""
@@ -57,6 +51,8 @@ def recognize_faces(video_source=0):
                 name = "Andree"
             elif label_id == 1:
                 name = "Ethan"
+            else: 
+                name = "Unspecified"
             if confidence < 100:
                 label_text = f"Person {name}"
             else:
@@ -72,5 +68,5 @@ def recognize_faces(video_source=0):
     cap.release()
     cv2.destroyAllWindows()
 
-# Start recognizing faces
-recognize_faces()
+if __name__ == "__main__":
+    recognize_faces()

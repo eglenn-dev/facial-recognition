@@ -4,7 +4,7 @@
 
 This project is a facial recognition program made in Python using the OpenCV library. The program uses the Haar Cascade Classifier to detect faces in images. The program can detect multiple faces in a webcam stream and will draw a frame around them to label them and will include their name when specified.
 
-[Website Demo]()
+[Website Demo](https://youtu.be/F3RV4v9CXNo)
 
 # Development Environment
 
